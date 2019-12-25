@@ -19,16 +19,21 @@ def user_segment(row):
             (False, False, False): 8, # 一般挽留用户
            }[(row['R'], row['F'], row['M'])] 
 
-
 df = pd.read_excel('./2019-12-24.xlsx', dtype={'pay_time': np.datetime64}) 
 df['recency'] =  df['pay_time'].apply(count_days)
-
 print('df.median is ', df.median())
 
 df['R'] = (df['recency'] <= df['recency'].median())
 df['F'] = (df['count'] >= df['count'].median())
 df['M'] = (df['sum( amount )'] >= df['sum( amount )'].median())
 df['user_segment'] = df.apply(user_segment, axis=1)
+
+for row_name in ('R', 'F', 'M'):
+    df[row_name] = df[row_name].map({True: 'High', False: 'Low'})
+#df['R'] = df['R'].map({True: 'High', False: 'Low'})
+#df['F'] = df['F'].map({True: 'High', False: 'Low'})
+#df['M'] = df['M'].map({True: 'High', False: 'Low'})
+
 df = df[['uid', 'pay_time', 'count', 'sum( amount )', 'R', 'F', 'M', 'user_segment']]
 
 print('df.shape is ', df.shape)
