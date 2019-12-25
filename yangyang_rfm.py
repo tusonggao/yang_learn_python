@@ -23,10 +23,10 @@ df = pd.read_excel('./2019-12-24.xlsx', dtype={'pay_time': np.datetime64})
 df['recency'] =  df['pay_time'].apply(count_days)
 print('df.median is ', df.median())
 
-df['R'] = (df['recency'] <= df['recency'].median())
-#df['F'] = (df['count'] >= df['count'].median())
-df['F'] = (df['count'] >= df['count'].mean())
-df['M'] = (df['sum( amount )'] >= df['sum( amount )'].median())
+df['R'] = (df['recency'] < df['recency'].median())
+df['F'] = (df['count'] > df['count'].median())
+#df['F'] = (df['count'] > df['count'].mean())
+df['M'] = (df['sum( amount )'] > df['sum( amount )'].median())
 df['user_segment'] = df.apply(user_segment, axis=1)
 
 for row_name in ('R', 'F', 'M'):
