@@ -24,7 +24,8 @@ df['recency'] =  df['pay_time'].apply(count_days)
 print('df.median is ', df.median())
 
 df['R'] = (df['recency'] <= df['recency'].median())
-df['F'] = (df['count'] >= df['count'].median())
+#df['F'] = (df['count'] >= df['count'].median())
+df['F'] = (df['count'] >= df['count'].mean())
 df['M'] = (df['sum( amount )'] >= df['sum( amount )'].median())
 df['user_segment'] = df.apply(user_segment, axis=1)
 
@@ -51,3 +52,4 @@ del df['pay_time']
 time_ago = datetime.datetime.strptime("2019-12-01 1:20:30", "%Y-%m-%d %H:%M:%S")
 print('count_days is ', count_days(time_ago))
 #sys.exit(0)
+
