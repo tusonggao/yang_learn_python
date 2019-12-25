@@ -21,6 +21,7 @@ def user_segment(row):
 
 df = pd.read_excel('./2019-12-25.xlsx', dtype={'pay_time': np.datetime64}) 
 df['recency'] =  df['pay_time'].apply(count_days)
+print('df.median is ', df.median())
 
 df['R'] = (df['recency'] < df['recency'].median())
 df['F'] = (df['count'] > df['count'].median())
@@ -31,4 +32,11 @@ for row_name in ('R', 'F', 'M'):
     df[row_name] = df[row_name].map({True: 'High', False: 'Low'})
 
 df = df[['uid', 'pay_time', 'count', 'amount', 'R', 'F', 'M', 'user_segment']]
+
+print('df.shape is ', df.shape)
+print('df.dtypes is ', df.dtypes)
+print('df.head(10) is ', df.head(10))
 df.to_excel('./user_segmentation.xlsx', index=False)
+
+print('prog ends here!')
+
